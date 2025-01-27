@@ -138,6 +138,27 @@ LEFT JOIN zone_lookup zl
 	ON tp.pickup_locations=zl."LocationID";
 ```
 
+## 6. Largest tip
+
+
+```sql
+SELECT 
+	MAX(gt.tip_amount) as max_tip,
+	zl_do."Zone" as dropoff_zone
+	
+	FROM green_taxi_trips gt
+	INNER JOIN zone_lookup zl_do
+		ON gt."DOLocationID" = zl_do."LocationID"
+		
+	INNER JOIN zone_lookup zl_pu
+		ON gt."PULocationID" = zl_pu."LocationID"
+		AND  zl_pu."Zone" = 'East Harlem North'
+	WHERE gt.lpep_pickup_datetime BETWEEN '2019-10-01' AND '2019-10-31'
+	-- WHERE TO_CHAR(gt.lpep_pickup_datetime, 'Month YYYY') ='October 2019'
+	GROUP BY dropoff_zone
+	ORDER BY max_tip DESC
+```
+
 
 
 
