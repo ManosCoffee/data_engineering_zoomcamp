@@ -6,7 +6,7 @@
 
 with fct_trips as (
     select 
-        *,
+        tripid,
         extract(year from pickup_datetime)  as rev_year,
         extract(month from pickup_datetime)  as rev_month,
         extract(quarter from pickup_datetime) as rev_quarter,
